@@ -1,5 +1,5 @@
 #!/bin/bash
-OUTPUT_FILE=/bitprim/conf/bitprim-node.cfg
+OUTPUT_FILE=/kth/conf/kth-node.cfg
 NODE_MEMORY_LIMIT=8192
 NODE_NAME="bitcore-${NETWORK}"
 IS_TESTNET=0

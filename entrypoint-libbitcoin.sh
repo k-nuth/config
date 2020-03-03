@@ -1,8 +1,8 @@
 #!/bin/bash
 #HTTP_ADDR=http://172.17.0.1
 OUTPUT_FILE=/opt/libbitcoin/etc/bs.cfg
-#OUTPUT_FILE=./bitprim-node.cfg
-[ ! -n "$CONFIG_REPO" ] && CONFIG_REPO=https://github.com/bitprim/bitprim-config.git
+#OUTPUT_FILE=./kth-node.cfg
+[ ! -n "$CONFIG_REPO" ] && CONFIG_REPO=https://github.com/kth/kth-config.git
 
 configure_external_port()
 {
@@ -30,19 +30,19 @@ sed -i "s/self =.*/self = ${EXTERNAL_IP}:${MAPPED_PORT}/g" $OUTPUT_FILE
 copy_config()
 {
 echo "Cloning config repository $CONFIG_REPO"
-cd /opt/libbitcoin ; rm -rf bitprim-config
+cd /opt/libbitcoin ; rm -rf kth-config
 git clone ${CONFIG_REPO}
 
 
 if [ -n "$CONFIG_FILE" ] ; then
 echo "Copying ${CONFIG_FILE} from repo (CONFIG_FILE variable found)"
-cp bitprim-config/$CONFIG_FILE ${OUTPUT_FILE}
+cp kth-config/$CONFIG_FILE ${OUTPUT_FILE}
 
 else
 [ ! -n "$COIN" ] && COIN=btc
 [ ! -n "$NETWORK" ] && NETWORK=mainnet
-echo "Copying bitprim-node-${COIN}-${NETWORK}.cfg from repo"
-cp bitprim-config/libbitcoin-server-${COIN}-${NETWORK}.cfg  ${OUTPUT_FILE}
+echo "Copying kth-node-${COIN}-${NETWORK}.cfg from repo"
+cp kth-config/libbitcoin-server-${COIN}-${NETWORK}.cfg  ${OUTPUT_FILE}
 fi
 
 DB_DIR=$(sed -nr "/^\[database\]/ { :l /^directory[ ]*=/ { s/.*=[ ]*//; p; q;}; n; b l;}" $OUTPUT_FILE)

@@ -1,5 +1,5 @@
 #!/bin/bash
-OUTPUT_FILE=/bitprim/conf/bitprim-node.cfg
+OUTPUT_FILE=/kth/conf/kth-node.cfg
 NODE_MEMORY_LIMIT=8192
 NODE_NAME="bitcore-${COIN}-${NETWORK}"
 IS_TESTNET=0
@@ -83,9 +83,9 @@ configure_node()
         bitcore create ${NODE_NAME} && cd ${NODE_NAME} && bitcore uninstall address && bitcore uninstall db && bitcore install insight-api && bitcore install insight-ui
         BITCOIND_BINARY=$(cat bitcore-node.json | jq '.servicesConfig.bitcoind.spawn.exec' -r)
         BITCOIND_DATADIR=/root/.bitcoin/blockchain
-        if [ "${COIN}" == "bcc" ] ; then
+        if [ "${COIN}" == "bch" ] ; then
             BITCOIND_BINARY="/usr/bin/bitcoind"
-        fi #[ "${COIN}" == "bcc" ]
+        fi #[ "${COIN}" == "bch" ]
     cd /root/.bitcoin/${NODE_NAME}
     if [ "${STANDALONE}" == "true" ] ; then
     echo "Creating bitcore-node.json for standalone bitcore node"
@@ -145,17 +145,17 @@ EOF
 }
 EOF
 
-[ "${COIN}" == "bcc" ] && configure_bitcoinabc
+[ "${COIN}" == "bch" ] && configure_bitcoinabc
 fi #IF STANDALONE
 
 echo "Copying UI files"
-tar xpvzf /root/bitprim-config/blockdozer/insight-ui-beta-${COIN}.tar.gz -C /root/.bitcoin/${NODE_NAME}/node_modules
+tar xpvzf /root/kth-config/blockdozer/insight-ui-beta-${COIN}.tar.gz -C /root/.bitcoin/${NODE_NAME}/node_modules
 
 
 
-if [ "${COIN}" == "bcc" ] ; then
+if [ "${COIN}" == "bch" ] ; then
 echo "Applying patches to bitcore"
-cd /root/bitprim-config/blockdozer/patches && cp -r * /root/.bitcoin/${NODE_NAME}
+cd /root/kth-config/blockdozer/patches && cp -r * /root/.bitcoin/${NODE_NAME}
 cp ../bitcoind /usr/bin/bitcoind
 fi
 
